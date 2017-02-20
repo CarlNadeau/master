@@ -86,7 +86,7 @@ for i=1:max(dim_tri)
                 beta1_21=(((1-alpha1(1))+alpha1(2))/2)*pixel1_21;
                 beta1_12=((alpha1(1)+(1-alpha1(2)))/2)*pixel1_12;
                 beta1_22=((alpha1(1)+alpha1(2))/2)*pixel1_22;
-
+                %%%%%%%%%%%% here if not 0, stop
                 tri1(y,x,:,i)=(beta1_11+beta1_21+beta1_12+beta1_22)./2;
 
                 %pour le triangle de la deuxieme image
@@ -120,5 +120,12 @@ morphed_img(1,:,:) = img1(1,:,:);
 morphed_img(dim_img(2),:,:)= img1(dim_img(2),:,:);
 morphed_img(:,1,:) = img1(:,1,:);
 morphed_img(:,dim_img(1),:) = img1(:,dim_img(1),:);
-morphed_img = image_construction + morphed_img;
+
+if(warp_frac==0 && dissolve_frac==0)
+    morphed_img = img1;
+elseif(warp_frac==1 && dissolve_frac==1)
+    morphed_img = img2;
+else
+    morphed_img = image_construction + morphed_img;
+end
 end
